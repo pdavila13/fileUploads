@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\User;
 use Faker\Factory;
+use Illuminate\Http\UploadedFile;
+use Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -21,13 +23,15 @@ class UserControllerTest extends TestCase
     public function testUsersAreCreatedOK()
     {
         // Prepare
+        Storage::fake('general');
+
         $faker = Factory::create();
 
         $user = [
             'name'      => $name = $faker->name,
             'email'     => $email = $faker->unique()->safeEmail,
             'password'  => $password = bcrypt('secret'),
-            'file'      => $file = 'logo.png'
+            'file'      => $file = UploadedFile::fake()->image('logo.png')
         ];
 
         // Login a authorized user and Execute
