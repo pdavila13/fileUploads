@@ -23,7 +23,7 @@ class UserControllerTest extends TestCase
     public function testUsersAreCreatedOK()
     {
         // Prepare
-        Storage::fake('general');
+        Storage::fake('local');
 
         $faker = Factory::create();
 
@@ -31,7 +31,7 @@ class UserControllerTest extends TestCase
             'name'      => $name = $faker->name,
             'email'     => $email = $faker->unique()->safeEmail,
             'password'  => $password = bcrypt('secret'),
-            'file'      => $file = UploadedFile::fake()->image('logo.png')
+            'file'      => UploadedFile::fake()->image('logo.png')
         ];
 
         // Login a authorized user and Execute
@@ -49,7 +49,9 @@ class UserControllerTest extends TestCase
             'name'      => $name,
             'email'     => $email,
             'password'  => $password,
-            'file'      => $file
+            'file'      => 'logo.png'
         ]);
+
+        Storage::disk('local')->assertExists('logo.png');
     }
 }
