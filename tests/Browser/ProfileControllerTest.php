@@ -36,6 +36,8 @@ class ProfileControllerTest extends DuskTestCase
                 ->type('name', $user['name'])
                 ->type('email', $user['email'])
                 ->type('password', $user['password'])
+                ->press('Create')
+                ->ass
                 ->attach('file',__DIR__.'/photo/logo.png');
         });
     }
