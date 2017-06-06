@@ -8,6 +8,10 @@ use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
+/**
+ * Class ProfileController
+ * @package Tests\Browser
+ */
 class ProfileControllerTest extends DuskTestCase
 {
     use DatabaseMigrations;
@@ -22,23 +26,23 @@ class ProfileControllerTest extends DuskTestCase
         $faker = Factory::create();
 
         $user = [
-            'name'      => $name = $faker->name,
-            'email'     => $email = $faker->unique()->safeEmail,
-            'password'  => $password = bcrypt('secret')
+            'name' => $name = $faker->name,
+            'email' => $email = $faker->unique()->safeEmail,
+            'password' => $password = $faker->password
         ];
 
         $admin = \factory(User::class)->create();
 
         $this->browse(function (Browser $browser) use ($user, $admin) {
             $browser->loginAs($admin)
-                ->visit('/profile')
-                ->pause(5000)
-                ->type('name', $user['name'])
-                ->type('email', $user['email'])
-                ->type('password', $user['password'])
-                ->press('Create')
-                ->ass
-                ->attach('file',__DIR__.'/photo/logo.png');
+                    ->visit('/profile')
+                    ->type('name', $user['name'])
+                    ->type('email', $user['email'])
+                    ->type('password', $user['password'])
+                    ->attach('file', __DIR__.'/photos/logo.png')
+                    ->press('Create')
+                    //Asserts
+                    ->assertSee('Laravel');
         });
     }
 }

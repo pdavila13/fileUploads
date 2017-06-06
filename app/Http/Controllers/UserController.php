@@ -7,6 +7,10 @@ use File;
 use Illuminate\Http\Request;
 use Storage;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers
+ */
 class UserController extends Controller
 {
     /**
@@ -32,8 +36,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return array
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -45,7 +49,7 @@ class UserController extends Controller
         $databaseUser = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'),
+            'password' => bcrypt($request->input('password')),
             'file' => $name,
         ];
 
