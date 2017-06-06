@@ -25261,11 +25261,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
-  }
+    mounted: function mounted() {
+        console.log('Component CreateUsersForm mounted.');
+    },
+    data: function data() {
+        return {
+            name: '',
+            email: '',
+            password: ''
+        };
+    },
+
+    methods: {
+        submit: function submit() {
+            var data = new FormData();
+            data.append('name', this.name);
+            data.append('email', this.email);
+            data.append('password', this.password);
+            data.append('file', document.getElementById('file').files[0]);
+            window.axios.post('/api/v1/user', data).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -43812,9 +43835,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-09cb5c50", Component.options)
+    hotAPI.createRecord("data-v-09c41e9b", Component.options)
   } else {
-    hotAPI.reload("data-v-09cb5c50", Component.options)
+    hotAPI.reload("data-v-09c41e9b", Component.options)
   }
 })()}
 
@@ -43920,15 +43943,20 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     attrs: {
       "id": "create-users-form"
     }
   }, [_c('form', {
     attrs: {
-      "action": ""
+      "accept-charset": "UTF-8",
+      "enctype": "multipart/form-data"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.submit($event)
+      }
     }
   }, [_c('div', {
     staticClass: "form-group"
@@ -43936,13 +43964,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "name"
     }
-  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Name: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.name),
+      expression: "name"
+    }],
     attrs: {
+      "id": "name",
       "type": "text",
       "name": "name",
-      "id": "name",
-      "placeholder": "Name",
+      "placeholder": "Place your name here",
       "value": ""
+    },
+    domProps: {
+      "value": (_vm.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.name = $event.target.value
+      }
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
@@ -43950,13 +43993,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "email"
     }
-  }, [_vm._v("Email")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Email: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.email),
+      expression: "email"
+    }],
     attrs: {
-      "type": "email",
-      "name": "email",
       "id": "email",
-      "placeholder": "Email",
+      "type": "text",
+      "name": "email",
+      "placeholder": "Place your email here",
       "value": ""
+    },
+    domProps: {
+      "value": (_vm.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.email = $event.target.value
+      }
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
@@ -43964,35 +44022,57 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "password"
     }
-  }, [_vm._v("Password")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Password: ")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.password),
+      expression: "password"
+    }],
     attrs: {
+      "id": "password",
       "type": "password",
       "name": "password",
-      "id": "password",
-      "placeholder": "Password",
+      "placeholder": "Place your password here",
       "value": ""
+    },
+    domProps: {
+      "value": (_vm.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.password = $event.target.value
+      }
     }
-  })]), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit",
+      "id": "create-user-button"
+    }
+  }, [_vm._v("Create")])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
       "for": "file"
     }
-  }, [_vm._v("File")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("File: ")]), _vm._v(" "), _c('input', {
     attrs: {
+      "id": "file",
       "type": "file",
       "name": "file",
-      "id": "file",
-      "placeholder": "file",
       "value": ""
     }
-  })])])])
+  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-09cb5c50", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-09c41e9b", module.exports)
   }
 }
 
